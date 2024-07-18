@@ -4,40 +4,25 @@
 
 #include "Rook.h"
 
+bool Rook::validateMove(const Point& source, const Point& dest, const std::vector<std::vector<Piece*>>& board) const {
+    if (source.getRow() == dest.getRow() || source.getCol() == dest.getCol()) {
+        int rowStep = (source.getRow() == dest.getRow()) ? 0 : (dest.getRow() > source.getRow() ? 1 : -1);
+        int colStep = (source.getCol() == dest.getCol()) ? 0 : (dest.getCol() > source.getCol() ? 1 : -1);
 
-bool Rook::validateMove(int sourceRow, int sourceCol, int destRow, int destCol, const std::vector<std::vector<Piece *>> &board) {
-    if (sourceRow != destRow && sourceCol != destCol) {
-        return false;
-    }
-    int xStep;
-    if (sourceRow == destRow) {
-        xStep = 0;
-    } else if (destRow > sourceRow) {
-        xStep = 1;
-    } else {
-        xStep = -1;
-    }
+        int currentRow = source.getRow() + rowStep;
+        int currentCol = source.getCol() + colStep;
 
-    int yStep;
-    if (sourceCol == destCol) {
-        yStep = 0;
-    } else if (destCol > sourceCol) {
-        yStep = 1;
-    } else {
-        yStep = -1;
-    }
-
-    int x = sourceRow + xStep;
-    int y = sourceCol + yStep;
-    while (x != destRow || y != destCol) {
-        if (board[x][y] != nullptr) {
-            return false;
+        while (currentRow != dest.getRow() || currentCol != dest.getCol()) {
+            if (board[currentRow][currentCol] != nullptr) {
+                return false;
+            }
+            currentRow += rowStep;
+            currentCol += colStep;
         }
-        x += xStep;
-        y += yStep;
-    }
-    if (board[destRow][destCol] == nullptr || board[destRow][destCol]->getColor() != getColor()) {
-        return true;
+
+        if (board[dest.getRow()][dest.getCol()] == nullptr || board[dest.getRow()][dest.getCol()]->getColor() != getColor()) {
+            return true;
+        }
     }
     return false;
 }

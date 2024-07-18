@@ -2,10 +2,11 @@
 // Created by Dor Shukrun on 18/07/2024.
 //
 
-#ifndef CHESS_CHESSGAME_H
-#define CHESS_CHESSGAME_H
+#ifndef CHESSGAME_H
+#define CHESSGAME_H
 
 #include "Piece.h"
+#include "Point.h"
 #include <vector>
 #include <string>
 
@@ -13,12 +14,13 @@ class ChessGame {
 private:
     std::vector<std::vector<Piece *>> board;
     bool isWhiteTurn;
-    int blackKingRow, blackKingCol;
-    int whiteKingRow, whiteKingCol;
+    int whiteKingRow;
+    int whiteKingCol;
+    int blackKingRow;
+    int blackKingCol;
 
-    char whosTurn() const;
-    bool validateMove(int sourceRow, int sourceCol, int destRow, int destCol);
-    bool isClearPath(int sourceRow, int sourceCol, int destRow, int destCol);
+    bool validateMove(const Point& source, const Point& dest);
+    bool isClearPath(const Point& source, const Point& dest);
     bool isKingInCheck(char color);
 
 public:
@@ -26,6 +28,7 @@ public:
     ~ChessGame();
     unsigned int movePiece(const std::string &input);
     void displayBoard() const;
+    char whosTurn() const;
 };
 
-#endif // CHESS_CHESSGAME_H
+#endif // CHESSGAME_H

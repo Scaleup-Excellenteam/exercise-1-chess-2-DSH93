@@ -2,12 +2,12 @@
 // Created by Dor Shukrun on 18/07/2024.
 //
 
-#include <iostream>
 #include "ChessGame.h"
 #include "Rook.h"
 #include "King.h"
 #include "Bishop.h"
 #include "Queen.h"
+#include <iostream>
 
 char BLACK = 'b';
 char WHITE = 'w';
@@ -53,14 +53,14 @@ ChessGame::~ChessGame() {
     }
 }
 
-bool ChessGame::isClearPath(int sourceRow, int sourceCol, int destRow, int destCol) {
-    int rowStep = (sourceRow == destRow) ? 0 : (destRow > sourceRow ? 1 : -1);
-    int colStep = (sourceCol == destCol) ? 0 : (destCol > sourceCol ? 1 : -1);
+bool ChessGame::isClearPath(const Point& source, const Point& dest) {
+    int rowStep = (source.getRow() == dest.getRow()) ? 0 : (dest.getRow() > source.getRow() ? 1 : -1);
+    int colStep = (source.getCol() == dest.getCol()) ? 0 : (dest.getCol() > source.getCol() ? 1 : -1);
 
-    int currentRow = sourceRow + rowStep;
-    int currentCol = sourceCol + colStep;
+    int currentRow = source.getRow() + rowStep;
+    int currentCol = source.getCol() + colStep;
 
-    while (currentRow != destRow || currentCol != destCol) {
+    while (currentRow != dest.getRow() || currentCol != dest.getCol()) {
         if (board[currentRow][currentCol] != nullptr) {
             return false;
         }
@@ -70,20 +70,20 @@ bool ChessGame::isClearPath(int sourceRow, int sourceCol, int destRow, int destC
     return true;
 }
 
-bool ChessGame::validateMove(int sourceRow, int sourceCol, int destRow, int destCol) {
-    if (board[sourceRow][sourceCol] == nullptr) {
+bool ChessGame::validateMove(const Point& source, const Point& dest) {
+    if (board[source.getRow()][source.getCol()] == nullptr) {
         return false;
-    } else if ((board[sourceRow][sourceCol]->getColor() == 'w' && !this->isWhiteTurn) ||
-               (board[sourceRow][sourceCol]->getColor() == 'b' && this->isWhiteTurn)) {
+    } else if ((board[source.getRow()][source.getCol()]->getColor() == 'w' && !this->isWhiteTurn) ||
+               (board[source.getRow()][source.getCol()]->getColor() == 'b' && this->isWhiteTurn)) {
         return false;
-    } else if (board[destRow][destCol] != nullptr &&
-               ((board[destRow][destCol]->getColor() == 'w' && this->isWhiteTurn) ||
-                (board[destRow][destCol]->getColor() == 'b' && !this->isWhiteTurn))) {
+    } else if (board[dest.getRow()][dest.getCol()] != nullptr &&
+               ((board[dest.getRow()][dest.getCol()]->getColor() == 'w' && this->isWhiteTurn) ||
+                (board[dest.getRow()][dest.getCol()]->getColor() == 'b' && !this->isWhiteTurn))) {
         return false;
-    } else if (!board[sourceRow][sourceCol]->validateMove(sourceRow, sourceCol, destRow, destCol, board)) {
+    } else if (!board[source.getRow()][source.getCol()]->validateMove(source, dest, board)) {
         return false;
     }
-    return isClearPath(sourceRow, sourceCol, destRow, destCol);
+    return isClearPath(source, dest);
 }
 
 bool ChessGame::isKingInCheck(char color) {
@@ -95,11 +95,13 @@ bool ChessGame::isKingInCheck(char color) {
         kingRow = blackKingRow;
         kingCol = blackKingCol;
     }
+    Point kingPos(kingRow, kingCol);
 
     for (int row = 0; row < 8; row++) {
         for (int col = 0; col < 8; col++) {
             if (board[row][col] != nullptr && board[row][col]->getColor() != color) {
-                if (board[row][col]->validateMove(row, col, kingRow, kingCol, board)) {
+                Point currentPos(row, col);
+                if (board[row][col]->validateMove(currentPos, kingPos, board)) {
                     return true;
                 }
             }
@@ -109,35 +111,33 @@ bool ChessGame::isKingInCheck(char color) {
 }
 
 unsigned int ChessGame::movePiece(const std::string &input) {
-    int sourceRow = input[0] - 'a';
-    int sourceCol = input[1] - '1';
-    int destRow = input[2] - 'a';
-    int destCol = input[3] - '1';
+    Point source(input[0] - 'a', input[1] - '1');
+    Point dest(input[2] - 'a', input[3] - '1');
 
-    if (!validateMove(sourceRow, sourceCol, destRow, destCol)) {
-        return 21;
+    if (!validateMove(source, dest)) {
+        return 21; // Illegal movement of that piece
     }
 
-    Piece *movingPiece = board[sourceRow][sourceCol];
-    Piece *capturedPiece = board[destRow][destCol];
-    board[destRow][destCol] = movingPiece;
-    board[sourceRow][sourceCol] = nullptr;
+    Piece *movingPiece = board[source.getRow()][source.getCol()];
+    Piece *capturedPiece = board[dest.getRow()][dest.getCol()];
+    board[dest.getRow()][dest.getCol()] = movingPiece;
+    board[source.getRow()][source.getCol()] = nullptr;
 
     char currentTurnColor = whosTurn();
     if (isKingInCheck(currentTurnColor)) {
-        board[sourceRow][sourceCol] = movingPiece;
-        board[destRow][destCol] = capturedPiece;
-        return 31;
+        board[source.getRow()][source.getCol()] = movingPiece;
+        board[dest.getRow()][dest.getCol()] = capturedPiece;
+        return 31; // This movement will cause checkmate
     }
 
     delete capturedPiece;
     isWhiteTurn = !isWhiteTurn;
-    return 42;
+    return 42; // Legal movement
 }
 
 void ChessGame::displayBoard() const {
     for (int row = 0; row < 8; ++row) {
-        for (int col = 0; ;++col) {
+        for (int col = 0; col < 8; ++col) {
             if (board[row][col] == nullptr) {
                 std::cout << ". ";
             } else {

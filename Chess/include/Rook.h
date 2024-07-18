@@ -2,22 +2,17 @@
 // Created by Dor Shukrun on 18/07/2024.
 //
 
-#ifndef CHESS_ROOK_H
-#define CHESS_ROOK_H
+#ifndef ROOK_H
+#define ROOK_H
 
 #include "Piece.h"
+#include "Point.h"
 
 class Rook : public Piece {
 public:
-    Rook(char c) : Piece(c) {} // Constructor
-
-    Rook(const Rook& other) : Piece(other.color) {} // Copy constructor
-
-    bool validateMove(int sourceRow, int sourceCol, int destRow, int destCol, const std::vector<std::vector<Piece*>>& board) override; // checking if the move is valid
-
-    char getPieceSymbol() const override { return getColor() == 'w' ? 'R' : 'r'; } // symbol of the piece (R for white, r for black)
+    Rook(char c) : Piece(c) {}
+    bool validateMove(const Point& source, const Point& dest, const std::vector<std::vector<Piece*>>& board) const override;
+    char getPieceSymbol() const override { return getColor() == 'w' ? 'R' : 'r'; }
 };
 
-
-
-#endif //CHESS_ROOK_H
+#endif // ROOK_H

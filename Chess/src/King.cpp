@@ -2,10 +2,11 @@
 // Created by Dor Shukrun on 18/07/2024.
 //
 #include "King.h"
+#include <cmath>
 
-bool King::validateMove(int sourceRow, int sourceCol, int destRow, int destCol, const std::vector<std::vector<Piece*>>& board) {
-    if (abs(sourceRow - destRow) <= 1 && abs(sourceCol - destCol) <= 1) {
-        if (board[destRow][destCol] == nullptr || board[destRow][destCol]->getColor() != getColor()) {
+bool King::validateMove(const Point& source, const Point& dest, const std::vector<std::vector<Piece*>>& board) const {
+    if (abs(source.getRow() - dest.getRow()) <= 1 && abs(source.getCol() - dest.getCol()) <= 1) {
+        if (board[dest.getRow()][dest.getCol()] == nullptr || board[dest.getRow()][dest.getCol()]->getColor() != getColor()) {
             return true;
         }
     }
