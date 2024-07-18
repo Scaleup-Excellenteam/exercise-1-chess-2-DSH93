@@ -70,6 +70,13 @@ build CMakeFiles/Chess.dir/src/Bishop.cpp.o: CXX_COMPILER__Chess_unscanned_Debug
   OBJECT_DIR = CMakeFiles/Chess.dir
   OBJECT_FILE_DIR = CMakeFiles/Chess.dir/src
 
+build CMakeFiles/Chess.dir/src/ChessGame.cpp.o: CXX_COMPILER__Chess_unscanned_Debug /cygdrive/c/Users/Dor$ Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/src/ChessGame.cpp || cmake_object_order_depends_target_Chess
+  DEP_FILE = CMakeFiles/Chess.dir/src/ChessGame.cpp.o.d
+  FLAGS = -g -std=c++20 -fdiagnostics-color=always
+  INCLUDES = -I"/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/include"
+  OBJECT_DIR = CMakeFiles/Chess.dir
+  OBJECT_FILE_DIR = CMakeFiles/Chess.dir/src
+
 build CMakeFiles/Chess.dir/src/main.cpp.o: CXX_COMPILER__Chess_unscanned_Debug /cygdrive/c/Users/Dor$ Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/src/main.cpp || cmake_object_order_depends_target_Chess
   DEP_FILE = CMakeFiles/Chess.dir/src/main.cpp.o.d
   FLAGS = -g -std=c++20 -fdiagnostics-color=always
@@ -92,7 +99,7 @@ build CMakeFiles/Chess.dir/src/Chess.cpp.o: CXX_COMPILER__Chess_unscanned_Debug 
 #############################################
 # Link the executable Chess.exe
 
-build Chess.exe: CXX_EXECUTABLE_LINKER__Chess_Debug CMakeFiles/Chess.dir/src/Rook.cpp.o CMakeFiles/Chess.dir/src/King.cpp.o CMakeFiles/Chess.dir/src/Bishop.cpp.o CMakeFiles/Chess.dir/src/main.cpp.o CMakeFiles/Chess.dir/src/Chess.cpp.o
+build Chess.exe: CXX_EXECUTABLE_LINKER__Chess_Debug CMakeFiles/Chess.dir/src/Rook.cpp.o CMakeFiles/Chess.dir/src/King.cpp.o CMakeFiles/Chess.dir/src/Bishop.cpp.o CMakeFiles/Chess.dir/src/ChessGame.cpp.o CMakeFiles/Chess.dir/src/main.cpp.o CMakeFiles/Chess.dir/src/Chess.cpp.o
   FLAGS = -g
   LINK_FLAGS = -Wl,--enable-auto-import
   OBJECT_DIR = CMakeFiles/Chess.dir

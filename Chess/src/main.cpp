@@ -1,15 +1,17 @@
 // Chess
 #include "Chess.h"
+#include "ChessGame.h"
 
 
 int main()
 
 {
-	string board = "RNBQKBNRPPPPPPPP################################pppppppprnbqkbnr";
+	string board = "R#BQKB#R################################################r#bqkb#r";
 	//string board = "R######R################################################r######r";
 	Chess a(board);
 	int codeResponse = 0;
 	string res = a.getInput();
+    ChessGame game;
 	while (res != "exit")
 	{
 		/*
@@ -28,8 +30,7 @@ int main()
 
 		/**/
 		{ // put your code here instead that code
-			cout << "code response >> ";
-			cin >> codeResponse;
+            codeResponse = game.movePiece(res);
 		}
 		/**/
 
