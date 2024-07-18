@@ -1,0 +1,7 @@
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/CMakeFiles/Chess.dir
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/CMakeFiles/edit_cache.dir
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/include/CMakeFiles/edit_cache.dir
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/include/CMakeFiles/rebuild_cache.dir
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/src/CMakeFiles/edit_cache.dir
+/cygdrive/c/Users/Dor Shukrun/AllCoding/Exelanteam/chessCpp/exercise-1-chess-2-DSH93/Chess/cmake-build-debug/src/CMakeFiles/rebuild_cache.dir

@@ -1,7 +1,7 @@
-	#include "Chess.h"
+#include "Chess.h"
 
 // clear the screen "cls"
-void Chess::clear() const 
+void Chess::clear() const
 {
 	COORD topLeft = { 0, 0 };
 	HANDLE console = GetStdHandle(STD_OUTPUT_HANDLE);
@@ -19,9 +19,9 @@ void Chess::clear() const
 	SetConsoleCursorPosition(console, topLeft);
 }
 // create the GUI - ASCII art
-void Chess::setFrames() 
-{ 
-	// set all to ' ' (space bar ascii value 32) instead of 0  
+void Chess::setFrames()
+{
+	// set all to ' ' (space bar ascii value 32) instead of 0
 	{
 		for (size_t row = 0; row < _SIZE; ++row)
 			for (size_t col = 0; col < _SIZE; ++col)
@@ -39,9 +39,9 @@ void Chess::setFrames()
 			m_board[i][0] = 186;
 			m_board[i][20] = 186;
 		}
-	} 
+	}
 
-	// set in side frame 
+	// set in side frame
 	{
 		m_board[2][2] = 218;  m_board[2][18] = 191;
 		m_board[18][2] = 192; m_board[18][18] = 217;
@@ -57,7 +57,7 @@ void Chess::setFrames()
 		for (size_t i = 2; i < 19; i += 2)
 			for (size_t j = 3; j < 19; j += 2)
 				m_board[i][j] = 196;
-		
+
 		for (size_t i = 3; i < 18; i += 2)
 			for (size_t j = 2; j < 19; j += 2)
 				m_board[i][j] = 179;
@@ -76,25 +76,25 @@ void Chess::setFrames()
 			m_board[i][18] = 180;
 	}
 
-	// set nums and letters 
+	// set nums and letters
 	{
-		// nums 
+		// nums
 		for (size_t i = 3, t = 0; i < 19; i += 2, ++t)
 			m_board[1][i] = m_board[19][i] = ('1' + t);
-		// letters 
+		// letters
 		for (size_t i = 3, t = 0; i < 19; i += 2, ++t)
 			m_board[i][1] = m_board[i][19] = ('A' + t);
 	}
 }
-// put the pieces from the boardString 
+// put the pieces from the boardString
 void Chess::setPieces()
 {
 	for (size_t row = 0, t = 0; row < 8; ++row)
 		for (size_t col = 0; col < 8; ++col, ++t)
 			m_board[(3 + (row * 2))][(3 + (col * 2))] = ((m_boardString[t] == '#') ? 32 : m_boardString[t]);
 }
-// print the only the board to screen 
-void Chess::show() const 
+// print the only the board to screen
+void Chess::show() const
 {
 	for (size_t row = 0; row < _SIZE; ++row)
 	{
@@ -103,27 +103,27 @@ void Chess::show() const
 		cout << endl;
 	}
 }
-// clear screen and print the board and the relevant msg 
+// clear screen and print the board and the relevant msg
 void Chess::displayBoard() const
 {
 	clear();
 	show();
 	cout << m_msg<< m_errorMsg;
-	
+
 }
-// print the who is turn before getting input 
-void Chess::showAskInput() const 
+// print the who is turn before getting input
+void Chess::showAskInput() const
 {
 	if (m_turn)
 		cout << "Player 1 (White - Capital letters) >> ";
 	else
 		cout << "Player 2 (Black - Small letters)   >> ";
 }
-// check if the source and dest are the same 
-bool Chess::isSame() const 
+// check if the source and dest are the same
+bool Chess::isSame() const
 {
 	return ((m_input[0] == m_input[2]) && (m_input[1] == m_input[3]));
-} 
+}
 // check if the input is lockations at board
 bool Chess::isValid() const
 {
@@ -132,30 +132,30 @@ bool Chess::isValid() const
 		(('A' <= m_input[2]) && (m_input[2] <= 'H')) || (('a' <= m_input[2]) && (m_input[2] <= 'h')) &&
 		(('1' <= m_input[3]) && (m_input[3] <= '8')));
 }
-	
-// check if the input is exit or quit  
-bool Chess::isExit() const 
+
+// check if the input is exit or quit
+bool Chess::isExit() const
 {
 	return ((m_input == "exit") || (m_input == "quit") || (m_input == "EXIT") || (m_input == "QUIT"));
 }
-// execute the movement on board 
+// execute the movement on board
 void Chess::excute()
 {
 	int row = (m_input[0] - 'a');
 	int col = (m_input[1] - '1');
-	char pieceInSource = m_boardString[(row * 8) + col]; 
-	m_boardString[(row * 8) + col] = '#'; 
+	char pieceInSource = m_boardString[(row * 8) + col];
+	m_boardString[(row * 8) + col] = '#';
 
 	row = (m_input[2] - 'a');
 	col = (m_input[3] - '1');
-	m_boardString[(row * 8) + col] = pieceInSource; 
+	m_boardString[(row * 8) + col] = pieceInSource;
 
-	setPieces(); 
+	setPieces();
 }
-// check the response code and switch turn if needed 
+// check the response code and switch turn if needed
 void Chess::doTurn()
 {
-	m_errorMsg = "\n"; 
+	m_errorMsg = "\n";
 	switch (m_codeResponse)
 	{
 	case 11:
@@ -208,7 +208,7 @@ Chess::Chess(const string& start)
 	setPieces();
 }
 
-// get the source and destination 
+// get the source and destination
 string Chess::getInput()
 {
 	static bool isFirst = true;
@@ -216,7 +216,7 @@ string Chess::getInput()
 	if (isFirst)
 		isFirst = false;
 	else
-		doTurn(); 
+		doTurn();
 
 	displayBoard();
 	showAskInput();
