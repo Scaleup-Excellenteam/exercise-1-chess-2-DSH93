@@ -11,3 +11,4 @@ bool King::validateMove(int sourceRow, int sourceCol, int destRow, int destCol, 
     }
     return false;
 }
+
